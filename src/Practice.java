@@ -122,7 +122,40 @@ public class Practice {
    * @return a sorted list of all reachable vertex values
    */
   public static List<Integer> sortedReachable(Map<Integer, Set<Integer>> graph, int starting) {
-    return null;
+    /*
+     * check if graph is null or if starting doesnt exist it graph
+     * create a return list and an order stack
+     * add to stack 
+     * while stack ! empty
+     * pop to value 
+     * add to list
+     * for each neighbors
+     * add to stack
+     * 
+     * for each neighbor
+     */
+
+    if(graph == null || graph.get(starting) == null) return new ArrayList<>();
+
+    List<Integer> sorted = new ArrayList<>();
+    Stack<Integer> order = new Stack<>();
+    Set<Integer> seen = new HashSet<>();
+
+    order.push(starting);
+    while (!order.isEmpty()) {
+      int cur = order.pop();
+      if(seen.contains(cur)) continue;
+      seen.add(cur);
+      sorted.add(cur);
+
+      for (Integer neighbor : graph.get(cur)) {
+        order.add(neighbor);
+      }
+    }
+
+    Collections.sort(sorted);
+
+    return sorted;
   }
 
   /**
