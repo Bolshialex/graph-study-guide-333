@@ -1,8 +1,10 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
 
@@ -281,6 +283,35 @@ public class Practice {
    * @return true if a person in the extended network works at the specified company, false otherwise
    */
   public static boolean hasExtendedConnectionAtCompany(Professional person, String companyName) {
+    /*
+     * BFS
+     * create a set and queue for order
+     * add to qu
+     * while qu is not empty
+     * pop to value 
+     * add to set
+     * check if set contains companys name
+     * for each neighbor add the qu
+     */
+
+    if(person == null) return false;
+
+    Set<Professional> seen = new HashSet<>();
+    Queue<Professional> qu = new LinkedList<>();
+
+    qu.add(person);
+
+    while (!qu.isEmpty()) {
+      Professional cur = qu.poll();
+      if(seen.contains(cur)) continue;
+      seen.add(cur);
+      if(cur.getCompany().equals(companyName)) return true;
+      for (Professional professional : cur.getConnections()) {
+        qu.add(professional);
+      }
+    }
+
+
     return false;
   }
 
