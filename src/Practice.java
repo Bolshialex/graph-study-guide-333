@@ -173,7 +173,50 @@ public class Practice {
    * @return true if there is a two-way connection between v1 and v2, false otherwise
    */
   public static <T> boolean twoWay(Vertex<T> v1, Vertex<T> v2) {
-    return false;
+    /*
+     * DFS
+     * create set for seen, stack for order
+     * if v1 || v2 is null return false
+     * do this twice for each way
+     * add to stack 
+     * while stack is not empty 
+     * pop to val
+     * check if v1 is in set
+     * add to set 
+     * check if v1 == v2
+     * return true 
+     * else for loop neighors add to stack
+     */
+    if(v1 == null || v2 == null) return false;
+    Stack<Vertex<T>> order = new Stack<>();
+    Set<Vertex<T>> seen1 = new HashSet<>();
+    Set<Vertex<T>> seen2 = new HashSet<>();
+
+    order.add(v1);
+    while (!order.isEmpty()) {
+      Vertex<T> cur = order.pop();
+      if(seen1.contains(cur)) continue;
+      seen1.add(cur);
+      
+      for(Vertex<T> neighbor : cur.neighbors){
+        order.push(neighbor);
+      }
+    }
+
+    if(!seen1.contains(v2)) return false;
+    
+    order.add(v2);
+    while (!order.isEmpty()) {
+      Vertex<T> cur = order.pop();
+      if(seen2.contains(cur)) continue;
+      seen2.add(cur);
+      
+      for(Vertex<T> neighbor : cur.neighbors){
+        order.push(neighbor);
+      }
+    }
+
+    return seen2.contains(v1);
   }
 
   /**
@@ -189,7 +232,43 @@ public class Practice {
    * @return whether there exists a valid positive path from starting to ending
    */
   public static boolean positivePathExists(Map<Integer, Set<Integer>> graph, int starting, int ending) {
-    return false;
+    /*
+     * DFS
+     * Create a set and a stack
+     * int value for increasing check
+     * add to stack
+     * while stack is not empty
+     * pop to value
+     * compare that value to max
+     * if greater continue else false
+     * 
+     * return true if cur == ending else false
+     */
+
+    if(graph == null || graph.get(starting) == null || graph.get(ending) == null || starting < 0 || ending < 0) return false;
+
+    Stack<Integer> order = new Stack<>();
+    Set<Integer> seen = new HashSet<>();
+
+    order.add(starting);
+
+    while (!order.isEmpty()) {
+      int cur = order.pop();
+
+      if(seen.contains(cur)) continue;
+      seen.add(cur);
+
+
+
+      for(int neighbor : graph.get(cur)){
+        if(neighbor >= 0){
+          order.push(neighbor);
+        }
+      }
+    }
+
+    
+    return seen.contains(ending);
   }
 
   /**
