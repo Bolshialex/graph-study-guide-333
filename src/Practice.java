@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -72,7 +73,42 @@ public class Practice {
    * @return a sorted list of all reachable vertex values by 
    */
   public static List<Integer> sortedReachable(Vertex<Integer> starting) {
-    return null;
+    /*
+     * dfs search 
+     * set for seen
+     * stack for order
+     * list for return
+     * check for null
+     * add to stack
+     * while stack is not empty
+     * pop off 
+     * add to seen 
+     * add to list
+     * add neighbors
+     * 
+     * after that sort list using collections
+     */
+    if(starting == null) return new ArrayList<>();
+    Stack<Vertex<Integer>> order = new Stack<>();
+    List<Integer> sorted = new ArrayList<>();
+    Set<Vertex<Integer>> seen = new HashSet<>();
+
+    order.push(starting);
+
+    while (!order.isEmpty()) {
+      Vertex<Integer> cur = order.pop();
+
+      if(seen.contains(cur)) continue;
+      seen.add(cur);      
+      sorted.add(cur.data);
+      for (Vertex<Integer> neighbor : cur.neighbors) {
+        order.push(neighbor);
+      }
+    }
+
+    Collections.sort(sorted);
+
+    return sorted;
   }
 
   /**
