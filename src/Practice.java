@@ -1,6 +1,9 @@
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
 
 public class Practice {
 
@@ -25,7 +28,25 @@ public class Practice {
    * @return the number of vertices with odd values reachable from the starting vertex
    */
   public static int oddVertices(Vertex<Integer> starting) {
-    return 0;
+    Stack<Vertex<Integer>> seen = new Stack<>();
+    int oddCount = 0;
+    seen.push(starting);
+
+    while (!seen.isEmpty()) {
+
+      Vertex<Integer> cur = seen.pop();
+
+      if(cur.data % 2 != 0){
+        oddCount++;
+      }
+
+      for(Vertex<Integer> neighbor : cur.neighbors){
+        seen.push(neighbor);
+      }
+    }
+
+    return oddCount;
+    
   }
 
   /**
