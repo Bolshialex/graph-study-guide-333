@@ -28,25 +28,29 @@ public class Practice {
    * @return the number of vertices with odd values reachable from the starting vertex
    */
   public static int oddVertices(Vertex<Integer> starting) {
-    Stack<Vertex<Integer>> seen = new Stack<>();
+    if(starting == null) return 0;
+    Set<Vertex<Integer>> seen = new HashSet<>();
+    Stack<Vertex<Integer>> order = new Stack<>();
     int oddCount = 0;
-    seen.push(starting);
+    order.push(starting);
 
-    while (!seen.isEmpty()) {
-
-      Vertex<Integer> cur = seen.pop();
+    while (!order.isEmpty()) {
+      Vertex<Integer> cur = order.pop();
+      if(seen.contains(cur)){
+        continue;
+      }
+      seen.add(cur);
 
       if(cur.data % 2 != 0){
         oddCount++;
       }
 
       for(Vertex<Integer> neighbor : cur.neighbors){
-        seen.push(neighbor);
+        order.push(neighbor);
       }
     }
 
     return oddCount;
-    
   }
 
   /**
